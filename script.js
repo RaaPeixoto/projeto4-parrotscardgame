@@ -1,5 +1,6 @@
 //prompt perguntando numero de cartas de 2 a 14 ( numero par)
 let qtdCartas;
+let idInterval;
 const tabuleiro = document.querySelector(".tabuleiro-cartas");
 function iniciarJogo(){
     qtdCartas = Number(prompt("Quantas cartas você quer jogar? \n Escolha um nº par (entre 4 e 14)"));
@@ -12,8 +13,17 @@ function iniciarJogo(){
     //tabuleiro.style.width = tamanhoTabuleiro + "px";
     selecionarTipodeCarta(qtdCartas);
     inserirCartas(qtdCartas)
+    idInterval = setInterval(atualizaContador, 1000);
 }
 
+//atualizar cronometro
+let segundos =0 ; 
+function atualizaContador() {
+    segundos ++;
+    let cronometro = document.querySelector(".segundos");
+    cronometro.innerHTML = segundos;
+    
+}
 
 // criar opções de cartas como array
 let opcoesCartas = [
@@ -70,44 +80,64 @@ let carta2;
 let cartasViradas = [];
 //função para virar a carta
 function virarCarta(cartaClicada){
-  
-    //primeiro click
-if (cartasViradas == 0){
-    if (cartaClicada.classList.contains ("clicado") == false ){
-        cartaClicada.classList.add ("clicado")
-        carta1 = cartaClicada;
-        cartasViradas.push (cartaClicada.innerHTML)
+
+    //PRIMEIRO CLICK
+    if (cartasViradas == 0){
+        // verificar se tem duas cartas clicadas
+        if (cartaClicada.classList.contains ("clicado") == false ){
+            cartaClicada.classList.add ("clicado")
+            carta1 = cartaClicada;
+            cartasViradas.push (cartaClicada.innerHTML)
+        }
+   
     }
-}
-// verificar se tem duas cartas clicadas
-else if (cartasViradas.length == 1) {
-// verificar se a carta não for clicada anteriormente
-    if (cartaClicada.classList.contains ("clicado") == false ){
-        cartaClicada.classList.add ("clicado")
-        carta2 = cartaClicada;
-        cartasViradas.push (cartaClicada.innerHTML)
+    //SEGUNDO CLICK
+    else if (cartasViradas.length == 1) {
+    // verificar se a carta não for clicada anteriormente
+        if (cartaClicada.classList.contains ("clicado") == false ){
+            cartaClicada.classList.add ("clicado")
+            carta2 = cartaClicada;
+            cartasViradas.push (cartaClicada.innerHTML)
+        }
+        setTimeout(compararCartas,1000)
     }
 
+}
 //quando tiver duas cartas viradas comparar se são iguais 
-} else if (cartasViradas.length == 2){
+
+let contadorDeJogadas = 0;
+function compararCartas () {
+    contadorDeJogadas += 1;
+if ( cartasViradas.length == 2){
     if (cartasViradas[0] == cartasViradas[1]){
-        alert("iguais")
         carta1="";
         carta2="";
         cartasViradas = [];// limpar array que compara
         } else { 
         // pegar as duas ultimas cartas viradas com a class list clicado e remover
+
         carta1.classList.remove ("clicado")
         carta2.classList.remove ("clicado")
         carta1="";
         carta2="";
         cartasViradas = [];// limpar array que compara
         
-        }
+        } 
+    }
+    finalizarJogo ()
 }
 
+
+function finalizarJogo (){
+    let acertos = document.querySelectorAll (".clicado")
+    if (acertos.length == qtdCartas){
+        clearInterval(idInterval);
+        alert (`Você ganhou o jogo com ${contadorDeJogadas} rodadas em ${segundos} segundos!` ) // jocolquei rodadas não jogadas
+        let repetir = prompt ("Deseja jogar novamente ? (Sim ou Não)")
+            if (repetir =="sim" ||  repetir == "Sim" || repetir == "SIM") {
+                location.reload()
+            }
+    }
 }
 
-
-    
 

@@ -17,7 +17,7 @@ div{
 }
 
 .nome-do-jogo{
-    font-family: 'Roboto';
+    font-family: 'Roboto',sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 56px;
@@ -88,8 +88,27 @@ div{
     transform: rotateY(-180deg);
   }
 
+.cronometro {
+    font-family: 'Roboto',sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 150px;
+    height: 20px;
+    background-color: #75B79E;
+    color:#EEF9BF ;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    justify-content: space-around;
+    align-items: center;
+}
 
-@media (max-width:335px){
+
+@media (max-width:600px){
     .nome-do-jogo{
         font-size: 36px;
         line-height: 42px;

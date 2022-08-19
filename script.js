@@ -98,8 +98,9 @@ function virarCarta(cartaClicada){
             cartaClicada.classList.add ("clicado")
             carta2 = cartaClicada;
             cartasViradas.push (cartaClicada.innerHTML)
+            setTimeout(compararCartas,1000)
         }
-        setTimeout(compararCartas,1000)
+       
     }
 
 }

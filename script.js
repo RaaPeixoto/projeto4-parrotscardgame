@@ -1,6 +1,7 @@
 //prompt perguntando numero de cartas de 2 a 14 ( numero par)
 let qtdCartas;
 let idInterval;
+let contadorDeJogadas = 0;
 const tabuleiro = document.querySelector(".tabuleiro-cartas");
 function iniciarJogo(){
     qtdCartas = Number(prompt("Quantas cartas você quer jogar? \n Escolha um nº par (entre 4 e 14)"));
@@ -66,8 +67,8 @@ function inserirCartas(qtdCartas){
             //adicionar no html a carta com indice sorteado
        tabuleiro.innerHTML = tabuleiro.innerHTML + 
        `<li class="carta" onclick = "virarCarta(this)" >  
-       <div class="frente face" > <img src="./imgs/front.png"></div>
-       <div class="verso face" ><img src =${cartasSorteadas [indiceCarta]}>  </div>
+       <div class="frente face" > <img src="./imgs/front.png" alt="frente da carta"></div>
+       <div class="verso face" ><img src =${cartasSorteadas [indiceCarta]} alt="verso da carta">  </div>
       
        </li>`;
         contador ++;
@@ -88,6 +89,7 @@ function virarCarta(cartaClicada){
             cartaClicada.classList.add ("clicado")
             carta1 = cartaClicada;
             cartasViradas.push (cartaClicada.innerHTML)
+            contadorDeJogadas += 1;
         }
    
     }
@@ -99,6 +101,7 @@ function virarCarta(cartaClicada){
             carta2 = cartaClicada;
             cartasViradas.push (cartaClicada.innerHTML)
             setTimeout(compararCartas,1000)
+            contadorDeJogadas += 1;
         }
        
     }
@@ -106,13 +109,14 @@ function virarCarta(cartaClicada){
 }
 //quando tiver duas cartas viradas comparar se são iguais 
 
-let contadorDeJogadas = 0;
 function compararCartas () {
-    contadorDeJogadas += 1;
+   
 if ( cartasViradas.length == 2){
     if (cartasViradas[0] == cartasViradas[1]){
+        
         carta1="";
         carta2="";
+      
         cartasViradas = [];// limpar array que compara
         } else { 
         // pegar as duas ultimas cartas viradas com a class list clicado e remover
@@ -133,7 +137,7 @@ function finalizarJogo (){
     let acertos = document.querySelectorAll (".clicado")
     if (acertos.length == qtdCartas){
         clearInterval(idInterval);
-        alert (`Você ganhou o jogo com ${contadorDeJogadas} rodadas em ${segundos} segundos!` ) // jocolquei rodadas não jogadas
+        alert (`Você ganhou o jogo com ${contadorDeJogadas} jogadas em ${segundos} segundos!` ) // jocolquei rodadas não jogadas
         let repetir = prompt ("Deseja jogar novamente ? (Sim ou Não)")
             if (repetir =="sim" ||  repetir == "Sim" || repetir == "SIM") {
                 location.reload()
